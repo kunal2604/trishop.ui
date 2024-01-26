@@ -8,12 +8,13 @@ import { UserAuthService } from './user-auth.service';
 })
 export class UserService {
   private userAuthService = inject(UserAuthService);
+  private httpclient = inject(HttpClient);
   BASE_URL = 'http://localhost:9090';
   requestHeaders = new HttpHeaders(
     {"No-Auth": "True"}
   );
 
-  constructor(private httpclient: HttpClient) { }
+  constructor() { }
 
   public login(loginData: any) {
     let url = this.BASE_URL + Endpoints.AUTHENTICATE;
