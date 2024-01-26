@@ -35,18 +35,18 @@ export class UserAuthService {
 
   public isAdmin() {
     const roles : any[]= this.getRoles();
-   for(var i=0; i<roles.length; i++) {
-    if(roles[i]['roleName'] == 'Admin')
-      return true
+    for(var i=0; i<roles.length; i++) {
+      if(roles[i]['roleName'] == 'Admin')
+      return true;
    }
     return false;
   }
 
   public isUser() {
     const roles : any[]= this.getRoles();
-   for(var i=0; i<roles.length; i++) {
+    for(var i=0; i<roles.length; i++) {
     if(roles[i]['roleName'] == 'User')
-      return true
+      return true;
    }
     return false;
   }
