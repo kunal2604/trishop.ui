@@ -32,4 +32,22 @@ export class UserAuthService {
   public isLoggedIn() {
     return this.getRoles() && this.getToken();
   }
+
+  public isAdmin() {
+    const roles : any[]= this.getRoles();
+   for(var i=0; i<roles.length; i++) {
+    if(roles[i]['roleName'] == 'Admin')
+      return true
+   }
+    return false;
+  }
+
+  public isUser() {
+    const roles : any[]= this.getRoles();
+   for(var i=0; i<roles.length; i++) {
+    if(roles[i]['roleName'] == 'User')
+      return true
+   }
+    return false;
+  }
 }
