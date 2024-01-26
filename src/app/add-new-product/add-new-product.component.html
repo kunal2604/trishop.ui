@@ -2,31 +2,38 @@
     <div class="card p-2">
         <div class="row">
             <div class="col-6">
-                <form>
+                <form #addProductForm="ngForm" (ngSubmit)="addProduct(addProductForm)">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Name</mat-label>
-                        <input matInput placeholder="Product Name">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Product Name</mat-label>
-                        <input matInput placeholder="Product Name">
+                        <input matInput placeholder="Product Name"
+                        [(ngModel)]="product.productName"
+                        name="productName" 
+                        >
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Description</mat-label>
-                        <input matInput placeholder="Product Description">
+                        <input matInput placeholder="Product Description"
+                        [(ngModel)]="product.productDescription"
+                        name="productDescription" 
+                        >
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Price</mat-label>
-                        <input matInput placeholder="Price">
+                        <input matInput placeholder="Price"
+                        [(ngModel)]="product.price"
+                        name="price" 
+                        >
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Discount</mat-label>
-                        <input matInput placeholder="Discount">
+                        <input matInput placeholder="Discount"
+                        [(ngModel)]="product.discount"
+                        name="discount" 
+                        >
                     </mat-form-field>
-
                     <div align="end">
                         <button mat-stroked-button color="warn" style="margin-right: 2px;">Clear</button>
-                        <button mat-stroked-button color="primary">Add</button>
+                        <button type="submit" mat-stroked-button color="primary">Add</button>
                     </div>
                 </form>
             </div>
