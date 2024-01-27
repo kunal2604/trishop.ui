@@ -36,6 +36,7 @@ export class AddNewProductComponent {
     this._productService.addNewProduct(productformData).subscribe(
       (response: Product) => {
         addProductForm.reset();
+        this.product.productImages = [];
       },
       (error: HttpErrorResponse) => {
         console.log(error);
@@ -69,12 +70,15 @@ export class AddNewProductComponent {
           )
         }
         this.product.productImages.push(fileHandle);
-      }
-      
+      } 
     }
   }
 
   public removeImage(i : number) {
     this.product.productImages.splice(i,1);
+  }
+
+  public clearForm(addProductForm: NgForm) {
+    addProductForm.reset();
   }
 }
