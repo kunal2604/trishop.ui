@@ -10,11 +10,13 @@ import { FileHandle } from '../_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { NgFor } from '@angular/common';
+import { DragDirective } from '../drag.directive';
+
 
 @Component({
   selector: 'app-add-new-product',
   standalone: true,
-  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, MatGridListModule, NgFor],
+  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, MatGridListModule, NgFor, DragDirective],
   templateUrl: './add-new-product.component.html',
   styleUrl: './add-new-product.component.css'
 })
@@ -71,6 +73,12 @@ export class AddNewProductComponent {
         }
         this.product.productImages.push(fileHandle);
       } 
+    }
+  }
+
+  public fileDropped(fileHandle: any) {
+    for(var i=0; i<fileHandle.length; i++) {
+      this.product.productImages.push(fileHandle[i]);
     }
   }
 
