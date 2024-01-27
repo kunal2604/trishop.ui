@@ -1,0 +1,18 @@
+mat-grid-tile {
+    border: 1px solid #eee;
+    border-color: yellow;
+    border-radius: 2px;
+}
+
+.btn-remove-image {
+    position: relative;
+    cursor: pointer;
+    top: -37px;
+    right: -96px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: auto;
+    text-align: center;
+}

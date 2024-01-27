@@ -8,11 +8,13 @@ import { ProductService } from '../_services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FileHandle } from '../_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-add-new-product',
   standalone: true,
-  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule ],
+  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, MatGridListModule, NgFor],
   templateUrl: './add-new-product.component.html',
   styleUrl: './add-new-product.component.css'
 })
@@ -70,5 +72,9 @@ export class AddNewProductComponent {
       }
       
     }
+  }
+
+  public removeImage(i : number) {
+    this.product.productImages.splice(i,1);
   }
 }
