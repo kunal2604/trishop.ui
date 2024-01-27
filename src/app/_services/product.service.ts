@@ -11,7 +11,7 @@ export class ProductService {
   BASE_URL = 'http://localhost:9090';
   constructor() { }
 
-  public addNewProduct(product: Product) {
+  public addNewProduct(product: FormData) {
     const url = this.BASE_URL + Endpoints.ADD_PRODUCT;
     return this.httpclient.post<Product>(url, product);
   }
