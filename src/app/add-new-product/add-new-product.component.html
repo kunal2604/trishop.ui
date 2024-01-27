@@ -32,7 +32,7 @@
                         >
                     </mat-form-field>
                     <div align="end">
-                        <button mat-stroked-button color="warn" style="margin-right: 2px;">Clear</button>
+                        <button mat-stroked-button color="warn" style="margin-right: 2px;" (click)="clearForm(addProductForm)">Clear</button>
                         <button type="submit" mat-stroked-button color="primary">Add</button>
                     </div>
                 </form>
@@ -40,8 +40,8 @@
             <div class="col-6">
                 <div>
                     <input type="file" multiple value="select" #selectFile
-                (change)="onFileSelected($event)"
-                >
+                    (change)="onFileSelected($event)"
+                    >
                 </div>
                 <div class="mt-5">
                     <div class="row">
@@ -56,7 +56,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
