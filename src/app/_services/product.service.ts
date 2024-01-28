@@ -15,4 +15,9 @@ export class ProductService {
     const url = this.BASE_URL + Endpoints.ADD_PRODUCT;
     return this.httpclient.post<Product>(url, product);
   }
+
+  public getAllProducts() {
+    const url = this.BASE_URL + Endpoints.GET_ALL_PRODUCTS;
+    return this.httpclient.get<Product[]>(url);
+  }
 }
