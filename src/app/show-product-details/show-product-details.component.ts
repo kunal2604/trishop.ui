@@ -4,18 +4,22 @@ import { ProductService } from '../_services/product.service';
 import { Product } from '../_model/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
 
 @Component({
   selector: 'app-show-product-details',
   standalone: true,
-  imports: [MatTableModule, MatIconModule],
+  imports: [MatTableModule, MatIconModule, MatDialogModule],
   templateUrl: './show-product-details.component.html',
   styleUrl: './show-product-details.component.css'
 })
 export class ShowProductDetailsComponent implements OnInit {
   private _productService = inject(ProductService);
+  private _imagesDialog = inject(MatDialog);
+
   productDetails : Product[] = [];
-  displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'edit', 'delete'];
+  displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'images', 'edit', 'delete'];
 
   ngOnInit(): void {
       this.getAllProducts();
@@ -37,6 +41,14 @@ export class ShowProductDetailsComponent implements OnInit {
         this.getAllProducts();
     }, (error: HttpErrorResponse) => {
       console.log(error);
+    });
+  }
+
+  public showImages(product: Product) {
+    console.log(product);
+    this._imagesDialog.open(ShowProductImagesDialogComponent, {
+      height: '400px',
+      width: '600px'
     });
   }
 }
