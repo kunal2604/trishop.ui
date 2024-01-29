@@ -41,8 +41,8 @@ export class ShowProductDetailsComponent implements OnInit {
     });
   }
 
-  public deleteProduct(element: any) {
-    return this._productService.deleteProduct(element.productId).subscribe(
+  public deleteProduct(productId: number) {
+    return this._productService.deleteProduct(productId).subscribe(
       (response) => {
         this.getAllProducts();
     }, (error: HttpErrorResponse) => {
