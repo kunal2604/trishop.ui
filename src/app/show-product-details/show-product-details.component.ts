@@ -6,6 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
+import { ImageProcessingService } from '../_services/image-processing.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-show-product-details',
@@ -17,6 +19,7 @@ import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/
 export class ShowProductDetailsComponent implements OnInit {
   private _productService = inject(ProductService);
   private _imagesDialog = inject(MatDialog);
+  private _imageProcessingService = inject(ImageProcessingService);
 
   productDetails : Product[] = [];
   displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'images', 'edit', 'delete'];
@@ -26,7 +29,11 @@ export class ShowProductDetailsComponent implements OnInit {
   }
 
   public getAllProducts() {
-    return this._productService.getAllProducts().subscribe(
+    return this._productService.getAllProducts()
+    .pipe(
+      map( (x: Product[], i) => x.map((product: Product) => this._imageProcessingService.createImagesFromProduct(product)) )
+    )
+    .subscribe(
       (response: Product[]) => {
         this.productDetails = response;
     }, (error : HttpErrorResponse) => {
@@ -37,7 +44,6 @@ export class ShowProductDetailsComponent implements OnInit {
   public deleteProduct(element: any) {
     return this._productService.deleteProduct(element.productId).subscribe(
       (response) => {
-        console.log(response);
         this.getAllProducts();
     }, (error: HttpErrorResponse) => {
       console.log(error);
@@ -45,8 +51,10 @@ export class ShowProductDetailsComponent implements OnInit {
   }
 
   public showImages(product: Product) {
-    console.log(product);
     this._imagesDialog.open(ShowProductImagesDialogComponent, {
+      data: {
+        images: product.productImages
+      },
       height: '400px',
       width: '600px'
     });
