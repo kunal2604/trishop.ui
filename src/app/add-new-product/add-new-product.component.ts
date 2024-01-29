@@ -8,7 +8,7 @@ import { ProductService } from '../_services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FileHandle } from '../_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { NgFor } from '@angular/common';
 import { DragDirective } from '../drag.directive';
 
@@ -33,7 +33,6 @@ export class AddNewProductComponent {
   }
 
   public addProduct(addProductForm: NgForm) {
-    console.log(this.product);
     const productformData = this.prepareFormData(this.product);
     this._productService.addNewProduct(productformData).subscribe(
       (response: Product) => {

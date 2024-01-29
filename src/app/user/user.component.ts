@@ -18,7 +18,6 @@ export class UserComponent {
   forUser() {
     this.userService.forUser().subscribe(
       (response) => {
-        console.log(response);
         this.message = response;
       },
       (error) => {

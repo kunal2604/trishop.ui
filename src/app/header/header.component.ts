@@ -3,8 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 import { UserAuthService } from '../_services/user-auth.service';
 import { NgIf } from '@angular/common';
 import { UserService } from '../_services/user.service';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
