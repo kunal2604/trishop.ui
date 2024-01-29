@@ -20,4 +20,9 @@ export class ProductService {
     const url = this.BASE_URL + Endpoints.GET_ALL_PRODUCTS;
     return this.httpclient.get<Product[]>(url);
   }
+
+  public deleteProduct(productId: number) {
+    const url = this.BASE_URL + Endpoints.DELETE_PRODUCT_DETAILS.replace("{productId}", productId.toString());
+    return this.httpclient.delete(url);
+  }
 }
