@@ -4,25 +4,36 @@ import { ProductService } from '../_services/product.service';
 import { Product } from '../_model/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
+import { ImageProcessingService } from '../_services/image-processing.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-show-product-details',
   standalone: true,
-  imports: [MatTableModule, MatIconModule],
+  imports: [MatTableModule, MatIconModule, MatDialogModule],
   templateUrl: './show-product-details.component.html',
   styleUrl: './show-product-details.component.css'
 })
 export class ShowProductDetailsComponent implements OnInit {
   private _productService = inject(ProductService);
+  private _imagesDialog = inject(MatDialog);
+  private _imageProcessingService = inject(ImageProcessingService);
+
   productDetails : Product[] = [];
-  displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'edit', 'delete'];
+  displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'images', 'edit', 'delete'];
 
   ngOnInit(): void {
       this.getAllProducts();
   }
 
   public getAllProducts() {
-    return this._productService.getAllProducts().subscribe(
+    return this._productService.getAllProducts()
+    .pipe(
+      map( (x: Product[], i) => x.map((product: Product) => this._imageProcessingService.createImagesFromProduct(product)) )
+    )
+    .subscribe(
       (response: Product[]) => {
         this.productDetails = response;
     }, (error : HttpErrorResponse) => {
@@ -33,10 +44,19 @@ export class ShowProductDetailsComponent implements OnInit {
   public deleteProduct(element: any) {
     return this._productService.deleteProduct(element.productId).subscribe(
       (response) => {
-        console.log(response);
         this.getAllProducts();
     }, (error: HttpErrorResponse) => {
       console.log(error);
+    });
+  }
+
+  public showImages(product: Product) {
+    this._imagesDialog.open(ShowProductImagesDialogComponent, {
+      data: {
+        images: product.productImages
+      },
+      height: '400px',
+      width: '600px'
     });
   }
 }
