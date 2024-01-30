@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -9,27 +9,38 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FileHandle } from '../_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { DragDirective } from '../drag.directive';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-new-product',
   standalone: true,
-  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, MatGridListModule, NgFor, DragDirective],
+  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, MatGridListModule, NgFor, NgIf, DragDirective],
   templateUrl: './add-new-product.component.html',
   styleUrl: './add-new-product.component.css'
 })
-export class AddNewProductComponent {
+export class AddNewProductComponent implements OnInit {
+  isNewProduct = true;
   private _productService = inject(ProductService);
   private _sanitizer = inject(DomSanitizer);
+  private _activatedRoute = inject(ActivatedRoute);
 
   product: Product = {
+    productId: 0,
     productName: "",
     productDescription: "",
     price: 0,
     discount:0,
     productImages: []
+  }
+
+  ngOnInit(): void {
+    this.product = this._activatedRoute.snapshot.data['product'];
+
+    if(this.product && this.product.productId) {
+      this.isNewProduct = false;
+    }
   }
 
   public addProduct(addProductForm: NgForm) {

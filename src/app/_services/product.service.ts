@@ -25,4 +25,9 @@ export class ProductService {
     const url = this.BASE_URL + Endpoints.DELETE_PRODUCT_DETAILS.replace("{productId}", productId.toString());
     return this.httpclient.delete(url);
   }
+
+  public getProductDetailsById(productId: number) {
+    const url = this.BASE_URL + Endpoints.GET_PRODUCT_DETAILS_BY_ID.replace("{productId}", productId.toString());
+    return this.httpclient.get<Product>(url);
+  }
 }
