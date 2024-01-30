@@ -5,5 +5,6 @@ export class Endpoints {
     public static FOR_ADMIN = "/forAdmin";
     public static ADD_PRODUCT = "/product/add";
     public static GET_ALL_PRODUCTS = "/getAllProducts";
+    public static GET_PRODUCT_DETAILS_BY_ID = "/getProductDetailsById/{productId}";
     public static DELETE_PRODUCT_DETAILS = "/deleteProductDetails/{productId}";
 }
