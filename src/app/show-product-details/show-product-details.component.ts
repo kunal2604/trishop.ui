@@ -21,7 +21,7 @@ export class ShowProductDetailsComponent implements OnInit {
   private _productService = inject(ProductService);
   private _imagesDialog = inject(MatDialog);
   private _imageProcessingService = inject(ImageProcessingService);
- private _router = inject(Router);
+  private _router = inject(Router);
 
   productDetails : Product[] = [];
   displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'images', 'edit', 'delete'];
