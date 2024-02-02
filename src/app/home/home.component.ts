@@ -4,7 +4,6 @@ import { ProductService } from '../_services/product.service';
 import { ImageProcessingService } from '../_services/image-processing.service';
 import { Product } from '../_model/product.model';
 import { map } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -25,7 +24,6 @@ export class HomeComponent implements OnInit {
   }
   
   public getAllProducts() {
-    console.log("as");
     this._productService.getAllProducts()
     .pipe(
       map((x:Product[], i) => x.map((product: Product) => { 
@@ -35,7 +33,7 @@ export class HomeComponent implements OnInit {
     )
     .subscribe(
       (resp:any) => {
-        console.log(resp);
+        this.productDetails = resp; 
       }
     );
   }

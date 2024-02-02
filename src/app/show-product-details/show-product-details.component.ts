@@ -24,7 +24,7 @@ export class ShowProductDetailsComponent implements OnInit {
   private _router = inject(Router);
 
   productDetails : Product[] = [];
-  displayedColumns: string[] = ['productName', 'productDescription', 'price', 'discount', 'images', 'edit', 'delete'];
+  displayedColumns: string[] = ['productName', 'description', 'price', 'discount', 'actions'];
 
   ngOnInit(): void {
       this.getAllProducts();
