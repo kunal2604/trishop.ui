@@ -14,7 +14,8 @@ export const authInterceptorService: HttpInterceptorFn = (req, next) => {
     }
 
     const token = userAuthSerce.getToken();
-    req = addToken(req, token !== null ? token : '');
+    if(token)
+        req = addToken(req, token !== null ? token : '');
 
     return next(req).pipe(
         catchError(
