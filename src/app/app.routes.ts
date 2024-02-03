@@ -8,6 +8,7 @@ import { AuthGuard } from './_auth/auth.guard';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { ProductResolver } from './_services/product-resolve.service';
+import { ProductViewDetailComponent } from './product-view-detail/product-view-detail.component';
 
 export const routes: Routes = [
     { path:'', component: HomeComponent },
@@ -20,5 +21,6 @@ export const routes: Routes = [
             product: ProductResolver
         }
     },
-    { path:'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: {roles: ['Admin']} }
+    { path:'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: {roles: ['Admin']} },
+    { path:'productViewDetails', component: ProductViewDetailComponent, resolve: { product: ProductResolver } }
 ];

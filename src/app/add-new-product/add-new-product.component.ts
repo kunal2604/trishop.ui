@@ -33,7 +33,7 @@ export class AddNewProductComponent implements OnInit {
     price: 0,
     discount:0,
     productImages: []
-  }
+  };
 
   ngOnInit(): void {
     this.product = this._activatedRoute.snapshot.data['product'];
