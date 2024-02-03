@@ -6,6 +6,7 @@ import { Product } from '../_model/product.model';
 import { map } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class HomeComponent implements OnInit {
   private _productService = inject(ProductService);
   private _imageProcessingService = inject(ImageProcessingService);
+  private _router = inject(Router);
   productDetails: Product[] = [];
 
   ngOnInit(): void {
@@ -36,5 +38,9 @@ export class HomeComponent implements OnInit {
         this.productDetails = resp; 
       }
     );
+  }
+
+  showProductDetails(productId: number) {
+    this._router.navigate(['/productViewDetails', { productId: productId }]);
   }
 }
