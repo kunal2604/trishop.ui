@@ -2,12 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { Product } from '../_model/product.model';
 import { FileHandle } from '../_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { BrowserService } from './browser.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageProcessingService {
   private _sanitizer = inject(DomSanitizer);
+  private _browserService = inject(BrowserService);
   constructor() { }
 
   public createImagesFromProduct(product: Product) {
@@ -20,7 +22,7 @@ export class ImageProcessingService {
       const imageFile = new File([imageBlob], imageFileData.name, { type : imageFileData.type });
       const finalFileHandle: FileHandle = {
         file: imageFile,
-        url: this._sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
+        url: this._sanitizer.bypassSecurityTrustUrl(this._browserService.createUrlFromFile(imageFile))
       };
 
       // Push to final array
@@ -32,14 +34,14 @@ export class ImageProcessingService {
   }
 
   public dataUriToBlob(picByte: any, imageType: any) {
-    const byteString =  window.atob(picByte);
+    const byteString =  this._browserService.atob(picByte);
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
 
     for(let i = 0; i < byteString.length; i++) {
       int8Array[i] = byteString.charCodeAt(i);
     }
-
+    
     const blob = new Blob([int8Array], { type: imageType});
     return blob;
   }

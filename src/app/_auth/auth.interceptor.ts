@@ -13,7 +13,8 @@ export const authInterceptorService: HttpInterceptorFn = (req, next) => {
         return next(req.clone());
     }
 
-    const token = userAuthSerce.getToken();
+    var token: any = userAuthSerce.getToken()?.toString();
+    
     if(token)
         req = addToken(req, token !== null ? token : '');
 
