@@ -12,6 +12,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { NgFor, NgIf } from '@angular/common';
 import { DragDirective } from '../drag.directive';
 import { ActivatedRoute } from '@angular/router';
+import { BrowserService } from '../_services/browser.service';
 
 @Component({
   selector: 'app-add-new-product',
@@ -25,6 +26,7 @@ export class AddNewProductComponent implements OnInit {
   private _productService = inject(ProductService);
   private _sanitizer = inject(DomSanitizer);
   private _activatedRoute = inject(ActivatedRoute);
+  private _browserService = inject(BrowserService);
 
   product: Product = {
     productId: 0,
@@ -73,12 +75,12 @@ export class AddNewProductComponent implements OnInit {
 
   public onFileSelected(event: any) {
     if(event.target.files) {
-      const upoadedFiles = event.target.files;
-      for(var i=0; i< upoadedFiles.length; i++) {
+      const uploadedFiles = event.target.files;
+      for(var i=0; i< uploadedFiles.length; i++) {
         const fileHandle: FileHandle = {
-          file: upoadedFiles[i],
+          file: uploadedFiles[i],
           url: this._sanitizer.bypassSecurityTrustUrl(
-            window.URL.createObjectURL(upoadedFiles[i])
+            this._browserService.createUrlFromFile(uploadedFiles[i])
           )
         }
         this.product.productImages.push(fileHandle);
