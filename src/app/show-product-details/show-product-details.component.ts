@@ -5,6 +5,7 @@ import { Product } from '../_model/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
 import { ImageProcessingService } from '../_services/image-processing.service';
 import { map } from 'rxjs';
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-show-product-details',
   standalone: true,
-  imports: [MatTableModule, MatIconModule, MatDialogModule],
+  imports: [MatTableModule, MatIconModule, MatDialogModule, MatButtonModule],
   templateUrl: './show-product-details.component.html',
   styleUrl: './show-product-details.component.css'
 })
