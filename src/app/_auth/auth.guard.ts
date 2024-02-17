@@ -23,8 +23,9 @@ export const AuthGuard: CanActivateFn = (route, state) => {
       router.navigate(['/forbidden']);
       return false;
     }
-  } else {
-    router.navigate(['/login']);
+  } 
+  else {
+    router.navigate(['/login']);  // During interceptor call, this page will be viewed until the API call is resolved
     return false;
   }
 };

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../_model/product.model';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,7 @@ export class ProductViewDetailComponent implements OnInit {
   };
 
   private _activatedRoute = inject(ActivatedRoute);
+  private _router = inject(Router);
   selectedProductImageIndex: number = 0;
 
   ngOnInit(): void {
@@ -34,4 +35,10 @@ export class ProductViewDetailComponent implements OnInit {
 	this.selectedProductImageIndex = index;
   }
 
+  public buyProduct(productId: number) {
+    this._router.navigate(['/buyProduct', {
+      isSingleProductCheckout: true,
+      id: productId
+    }]);
+  }
 }

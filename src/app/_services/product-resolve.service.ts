@@ -12,7 +12,7 @@ export const ProductResolver: ResolveFn<Product> =
     const id = route.paramMap.get("productId");
 
     if(id) {
-      //fetch product with given id 
+      //fetch product with given id
       var prodId = Number(id);
       return _productService.getProductDetailsById(Number(id))
       .pipe(
