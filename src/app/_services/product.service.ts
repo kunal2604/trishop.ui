@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Product } from '../_model/product.model';
 import { Endpoints } from '../_constants/endpoints';
+import { OrderDetails } from '../_model/order-details.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,15 @@ export class ProductService {
   public getProductDetailsById(productId: number) {
     const url = this.BASE_URL + Endpoints.GET_PRODUCT_DETAILS_BY_ID.replace("{productId}", productId.toString());
     return this.httpclient.get<Product>(url);
+  }
+
+  public getProductDetails(isSingleProductCheckout: boolean, productId: number) {
+    const url = this.BASE_URL + Endpoints.GET_PRODUCT_DETAILS.replace("{isSingleProductCheckout}", isSingleProductCheckout.toString()).replace("{productId}", productId.toString());
+    return this.httpclient.get<Product[]>(url);
+  }
+
+  public placeOrder(orderDetails: OrderDetails) {
+    const url = this.BASE_URL + Endpoints.PLACE_ORDER;
+    return this.httpclient.post(url, orderDetails);
   }
 }

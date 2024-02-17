@@ -22,5 +22,9 @@ export const routes: Routes = [
         }
     },
     { path:'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: {roles: ['Admin']} },
-    { path:'productViewDetails', component: ProductViewDetailComponent, resolve: { product: ProductResolver } }
+    { path:'productViewDetails', component: ProductViewDetailComponent, resolve: { product: ProductResolver } },
+    {
+        path: 'buyProduct',
+        loadChildren: () => import('./_buyProduct/buy-product-routing.module').then(m => m.BuyProductRoutingModule)
+    }
 ];
