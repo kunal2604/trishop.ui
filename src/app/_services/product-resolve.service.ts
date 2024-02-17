@@ -13,7 +13,6 @@ export const ProductResolver: ResolveFn<Product> =
 
     if(id) {
       //fetch product with given id
-      var prodId = Number(id);
       return _productService.getProductDetailsById(Number(id))
       .pipe(
         map(p => _imageProcessingService.createImagesFromProduct(p))
