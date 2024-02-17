@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { OrderDetails } from '../../_model/order-details.model';
@@ -7,11 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../_model/product.model';
 import { ProductService } from '../../_services/product.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-buy-product',
   standalone: true,
-  imports: [ FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule ],
+  imports: [ FormsModule, NgFor ,MatFormFieldModule, MatInputModule, MatButtonModule ],
   templateUrl: './buy-product.component.html',
   styleUrl: './buy-product.component.css'
 })
@@ -49,5 +50,40 @@ export class BuyProductComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  public getQuantityForProduct(productId: number) {
+    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
+      (productQuantity) => productQuantity.productId === productId
+    );
+
+    return filteredProduct[0].quantity;
+  }
+
+  public getCalculatedTotal(productId: number, price: number, discount: number) {
+    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
+      (productQuantity) => productQuantity.productId === productId
+    );
+
+    return Number(filteredProduct[0].quantity) * (price - discount);
+  }
+
+  public onQuantityChange(quantity: any, productId: number) {
+    this.orderDetails.orderProductQuantityList.filter(
+      (orderProduct) => orderProduct.productId === productId
+    )[0].quantity = Number(quantity);
+  }
+
+  public getCalculatedGrandTotal() {
+    let grandTotal = 0;
+    this.orderDetails.orderProductQuantityList.forEach(
+      (productQuantity) => {
+        const filterResult = this.productDetails.filter(product => product.productId === productQuantity.productId)[0];
+        const price = (filterResult.price - filterResult.discount) * Number(productQuantity.quantity);
+        grandTotal += price;
+      }
+    );
+
+    return grandTotal;
   }
 }
