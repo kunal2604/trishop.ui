@@ -7,6 +7,8 @@ import { map } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog';
+import { ContactUsComponent } from '../shared/components/dialog/contact-us/contact-us.component';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +16,13 @@ import { Router } from '@angular/router';
   imports: [MatGridListModule ,MatButtonModule, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
+  ,  providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {title: 'Notification'}} ]
 })
 export class HomeComponent implements OnInit {
   private _productService = inject(ProductService);
   private _imageProcessingService = inject(ImageProcessingService);
   private _router = inject(Router);
+  private _dialogBox = inject(MatDialog);
   productDetails: Product[] = [];
 
   ngOnInit(): void {
@@ -42,5 +46,12 @@ export class HomeComponent implements OnInit {
 
   showProductDetails(productId: number) {
     this._router.navigate(['/productViewDetails', { productId: productId }]);
+  }
+
+  public openContactUsForm() {
+    this._dialogBox.open(ContactUsComponent, {
+      width: '500px',
+      data: {name: 'Chaman'}
+    });
   }
 }

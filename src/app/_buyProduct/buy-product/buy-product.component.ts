@@ -8,18 +8,21 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../_model/product.model';
 import { ProductService } from '../../_services/product.service';
 import { NgFor } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationDialogueComponent } from '../../shared/components/dialog/notification-dialogue/notification-dialogue.component';
 
 @Component({
   selector: 'app-buy-product',
   standalone: true,
-  imports: [ FormsModule, NgFor ,MatFormFieldModule, MatInputModule, MatButtonModule ],
+  imports: [ FormsModule, NgFor, MatFormFieldModule, MatInputModule, MatButtonModule ],
   templateUrl: './buy-product.component.html',
   styleUrl: './buy-product.component.css'
 })
 export class BuyProductComponent implements OnInit {
   private _activatedRoute = inject(ActivatedRoute);
   private _productService = inject(ProductService);
-
+  private _dialogBox = inject(MatDialog);
+  
   productDetails: Product[] = [];
   orderDetails: OrderDetails = {
     orderName: '',
@@ -44,7 +47,8 @@ export class BuyProductComponent implements OnInit {
     this._productService.placeOrder(this.orderDetails).subscribe(
       (resp) => {
         console.log(resp);
-        orderForm.reset()
+        this.openNotificationForm('Order Placed', `Your order: ${this.orderDetails.orderName} was successfully placed!`);
+        orderForm.reset();
       },
       (err) => {
         console.log(err);
@@ -85,5 +89,15 @@ export class BuyProductComponent implements OnInit {
     );
 
     return grandTotal;
+  }
+
+  public openNotificationForm(title: string, message: string) {
+    this._dialogBox.open(NotificationDialogueComponent, {
+      data: {
+        title: title,
+        message: message
+      },
+      width: '30%'
+    });
   }
 }
