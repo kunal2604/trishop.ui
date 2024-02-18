@@ -1,0 +1,36 @@
+<div>
+    <button mat-icon-button style="float: right;" matDialogClose>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<mat-dialog-content>
+    <header>
+        <h1 style="text-align: center; font-weight: bold;"> Contact Us </h1>
+    </header>
+    <div class="forms-section">
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="Name">
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="Email">
+                <mat-icon matSuffix>drafts</mat-icon>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="Message">
+                <mat-icon matSuffix>save</mat-icon>
+            </mat-form-field>
+        </p>
+    </div>
+    
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary">Save</button>
+    <button mat-raised-button (click)="closePopup()" color="warn">Close</button> <!--calling custom method instead of matDialogClose-->
+</mat-dialog-actions>
