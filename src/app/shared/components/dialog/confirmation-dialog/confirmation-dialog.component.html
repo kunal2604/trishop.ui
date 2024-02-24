@@ -1,0 +1,18 @@
+<div class="confirmation-modal">
+    <div>
+        <button mat-icon-button style="float: right; " matDialogClose>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <header> <h1 style="text-align: center; font-weight: bold;"> {{ _dialogData.title }} </h1></header>
+        <div class="confirmation-container container mt-5">
+            <h2 class="confirmation-paragraph"> {{ _dialogData.message }} </h2>
+        </div>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="center">
+        <button mat-raised-button (click)="confirm()" color="primary">OK</button>
+        <button mat-raised-button (click)="close()" color="warn">Cancel</button>
+    </mat-dialog-actions>
+</div>
