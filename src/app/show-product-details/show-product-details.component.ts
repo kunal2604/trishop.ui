@@ -10,6 +10,7 @@ import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/
 import { ImageProcessingService } from '../_services/image-processing.service';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-show-product-details',
@@ -22,6 +23,7 @@ export class ShowProductDetailsComponent implements OnInit {
   private _productService = inject(ProductService);
   private _imagesDialog = inject(MatDialog);
   private _imageProcessingService = inject(ImageProcessingService);
+  private _dialogBox = inject(MatDialog);
   private _router = inject(Router);
 
   productDetails : Product[] = [];
@@ -45,11 +47,13 @@ export class ShowProductDetailsComponent implements OnInit {
   }
 
   public deleteProduct(productId: number) {
-    return this._productService.deleteProduct(productId).subscribe(
-      (response) => {
-        this.getAllProducts();
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
+    this.openConfirmationPopup('Confirmation', 'Are you sure you want to delete?', () => {
+      return this._productService.deleteProduct(productId).subscribe(
+        (response) => {
+          this.getAllProducts();
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+      });
     });
   }
 
@@ -66,5 +70,22 @@ export class ShowProductDetailsComponent implements OnInit {
   public updateProductDetails(productId: number) {
     // second parameter is a path parameter
     this._router.navigate(['/addNewProduct', {productId: productId}]);  
+  }
+
+  public openConfirmationPopup(title: string, message: string, callback: Function) {
+    var _confirmationPopup = this._dialogBox.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: {
+        title: title,
+        message: message
+      },
+      enterAnimationDuration: '400ms',
+      exitAnimationDuration: '40ms'
+    });
+    _confirmationPopup.afterClosed().subscribe((confirmationValue: string) => {
+      if(confirmationValue == "Yes") {
+        callback();
+      }
+    })
   }
 }

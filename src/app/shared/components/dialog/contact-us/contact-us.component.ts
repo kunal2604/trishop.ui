@@ -18,7 +18,6 @@ export class ContactUsComponent {
   }
 
   public closePopup() {
-    console.log('Closing contact form!');
     this._ref.close();
   }
 }

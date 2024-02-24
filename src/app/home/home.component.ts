@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ContactUsComponent } from '../shared/components/dialog/contact-us/contact-us.component';
 
 @Component({
@@ -16,7 +16,6 @@ import { ContactUsComponent } from '../shared/components/dialog/contact-us/conta
   imports: [MatGridListModule ,MatButtonModule, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
-  ,  providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {title: 'Notification'}} ]
 })
 export class HomeComponent implements OnInit {
   private _productService = inject(ProductService);
@@ -49,9 +48,14 @@ export class HomeComponent implements OnInit {
   }
 
   public openContactUsForm() {
-    this._dialogBox.open(ContactUsComponent, {
+    var _contactPopup = this._dialogBox.open(ContactUsComponent, {
       width: '500px',
-      data: {name: 'Chaman'}
+      data: {name: 'Trishop User'},
+      enterAnimationDuration: '400ms',
+      exitAnimationDuration: '40ms'
+    });
+    _contactPopup.afterClosed().subscribe((item) => {
+      console.log(item);
     });
   }
 }
