@@ -9,12 +9,14 @@ import { AddNewProductComponent } from './add-new-product/add-new-product.compon
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { ProductResolver } from './_services/product-resolve.service';
 import { ProductViewDetailComponent } from './product-view-detail/product-view-detail.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 export const routes: Routes = [
     { path:'', component: HomeComponent },
     { path:'admin', component: AdminComponent, canActivate: [AuthGuard], data: {roles: ['Admin']} },
     { path:'user', component: UserComponent, canActivate: [AuthGuard], data: {roles: ['User']} },
     { path:'login', component: LoginComponent },
+    { path:'registerUser', component: RegisterUserComponent },
     { path:'forbidden', component: ForbiddenComponent },
     { path:'addNewProduct', component: AddNewProductComponent, canActivate: [AuthGuard], data: {roles: ['Admin']},
         resolve: {

@@ -25,6 +25,17 @@ export class UserService {
     return this.httpclient.post(url, body, { headers: this.requestHeaders });
   }
 
+  public registerUser(registerUserData: any) {
+    let url = this.BASE_URL + Endpoints.REGISTER_NEW_USER;
+    let body = {
+      "userName": registerUserData.value.userName,
+      "userFirstName": registerUserData.value.userFirstName,
+      "userLastName": registerUserData.value.userLastName,
+      "userPassword": registerUserData.value.userPassword
+    };
+    return this.httpclient.post(url, body, { headers: this.requestHeaders });
+  }
+
   public roleMatch(allowedRoles: any[]): boolean {
     let isMatch = false;
     const userRoles:any = this.userAuthService.getRoles();
