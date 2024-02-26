@@ -26,6 +26,7 @@ export class ShowProductDetailsComponent implements OnInit {
   private _dialogBox = inject(MatDialog);
   private _router = inject(Router);
 
+  pageNumber: number = 0;
   productDetails : Product[] = [];
   displayedColumns: string[] = ['productName', 'description', 'price', 'discount', 'actions'];
 
@@ -34,12 +35,13 @@ export class ShowProductDetailsComponent implements OnInit {
   }
 
   public getAllProducts() {
-    return this._productService.getAllProducts()
+    return this._productService.getAllProducts(this.pageNumber, 5)
     .pipe(
       map( (x: Product[], i) => x.map((product: Product) => this._imageProcessingService.createImagesFromProduct(product)) )
     )
     .subscribe(
       (response: Product[]) => {
+        // response.forEach(p => this.productDetails.push(p)); // why not working ??
         this.productDetails = response;
     }, (error : HttpErrorResponse) => {
       console.log(error);

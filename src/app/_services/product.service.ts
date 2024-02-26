@@ -17,8 +17,8 @@ export class ProductService {
     return this.httpclient.post<Product>(url, product);
   }
 
-  public getAllProducts() {
-    const url = this.BASE_URL + Endpoints.GET_ALL_PRODUCTS;
+  public getAllProducts(pageNumber: number, pageSize: number) {
+    const url = this.BASE_URL + Endpoints.GET_ALL_PRODUCTS + "?pageNumber=" + pageNumber + "&pageSize=" + pageSize;
     return this.httpclient.get<Product[]>(url);
   }
 
