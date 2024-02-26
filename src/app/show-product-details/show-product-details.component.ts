@@ -41,7 +41,8 @@ export class ShowProductDetailsComponent implements OnInit {
     )
     .subscribe(
       (response: Product[]) => {
-        response.forEach(p => this.productDetails.push(p));
+        // response.forEach(p => this.productDetails.push(p)); // why not working ??
+        this.productDetails = response;
     }, (error : HttpErrorResponse) => {
       console.log(error);
     });
