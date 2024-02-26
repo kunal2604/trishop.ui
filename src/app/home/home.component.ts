@@ -13,7 +13,7 @@ import { ContactUsComponent } from '../shared/components/dialog/contact-us/conta
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatGridListModule ,MatButtonModule, NgFor],
+  imports: [MatGridListModule, MatButtonModule, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -23,22 +23,22 @@ export class HomeComponent implements OnInit {
   private _router = inject(Router);
   private _dialogBox = inject(MatDialog);
   productDetails: Product[] = [];
+  pageNumber: number = 0;
 
   ngOnInit(): void {
    this.getAllProducts();
   }
   
   public getAllProducts() {
-    this._productService.getAllProducts()
+    this._productService.getAllProducts(this.pageNumber, 5)
     .pipe(
       map((x:Product[], i) => x.map((product: Product) => { 
         return this._imageProcessingService.createImagesFromProduct(product);
-
       }))
     )
     .subscribe(
-      (resp:any) => {
-        this.productDetails = resp; 
+      (resp:Product[]) => {
+        resp.forEach(p => this.productDetails.push(p));
       }
     );
   }
@@ -57,5 +57,10 @@ export class HomeComponent implements OnInit {
     _contactPopup.afterClosed().subscribe((item) => {
       console.log(item);
     });
+  }
+
+  public loadMoreProducts() {
+    this.pageNumber++;
+    this.getAllProducts();
   }
 }
