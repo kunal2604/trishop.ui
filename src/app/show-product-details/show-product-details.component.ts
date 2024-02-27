@@ -46,7 +46,7 @@ export class ShowProductDetailsComponent implements OnInit {
     )
     .subscribe(
       (response: Product[]) => {
-        response.forEach(p => this.productDetails.push(p)); // why not working ??
+        response.forEach(p => this.productDetails.push(p));
         if(response.length == this.pageSize) {
           this.showLoadMoreButton = true;
         }
