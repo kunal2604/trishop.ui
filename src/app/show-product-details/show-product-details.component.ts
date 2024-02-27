@@ -12,11 +12,13 @@ import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog.component';
 import { NgIf } from '@angular/common';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-show-product-details',
   standalone: true,
-  imports: [MatTableModule, MatIconModule, MatDialogModule, MatButtonModule, NgIf],
+  imports: [MatTableModule, MatIconModule, MatDialogModule, MatButtonModule, MatFormField, MatInputModule, NgIf],
   templateUrl: './show-product-details.component.html',
   styleUrl: './show-product-details.component.css'
 })
@@ -38,9 +40,9 @@ export class ShowProductDetailsComponent implements OnInit {
       this.getAllProducts();
   }
 
-  public getAllProducts() {
+  public getAllProducts(searchKey:string = "") {
     this.showProductsTable = false;
-    return this._productService.getAllProducts(this.pageNumber, this.pageSize)
+    return this._productService.getAllProducts(this.pageNumber, this.pageSize, searchKey)
     .pipe(
       map( (x: Product[], i) => x.map((product: Product) => this._imageProcessingService.createImagesFromProduct(product)) )
     )
@@ -102,9 +104,14 @@ export class ShowProductDetailsComponent implements OnInit {
     })
   }
 
-
   public loadMoreProducts() {
     this.pageNumber++;
     this.getAllProducts();
+  }
+
+  public searchByKeyword(searchKey: string) {
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProducts(searchKey);
   }
 }
