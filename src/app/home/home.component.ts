@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   productDetails: Product[] = [];
   pageNumber: number = 0;
   pageSize: number = 4;
-  showLoadButton:boolean = false;
+  showLoadMoreButton:boolean = false;
 
   ngOnInit(): void {
    this.getAllProducts();
@@ -42,10 +42,10 @@ export class HomeComponent implements OnInit {
       (resp:Product[]) => {
         resp.forEach(p => this.productDetails.push(p));
         if(resp.length == this.pageSize) {
-          this.showLoadButton = true;
+          this.showLoadMoreButton = true;
         }
         else {
-          this.showLoadButton = false;
+          this.showLoadMoreButton = false;
         }
       }
     );
