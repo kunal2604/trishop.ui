@@ -9,11 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactUsComponent } from '../shared/components/dialog/contact-us/contact-us.component';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatGridListModule, MatButtonModule, NgFor, NgIf],
+  imports: [MatGridListModule, MatButtonModule, MatFormField, MatInputModule, NgFor, NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -31,8 +33,8 @@ export class HomeComponent implements OnInit {
    this.getAllProducts();
   }
   
-  public getAllProducts() {
-    this._productService.getAllProducts(this.pageNumber, this.pageSize)
+  public getAllProducts(searchKey: string = "") {
+    this._productService.getAllProducts(this.pageNumber, this.pageSize, searchKey)
     .pipe(
       map((x:Product[], i) => x.map((product: Product) => { 
         return this._imageProcessingService.createImagesFromProduct(product);
@@ -70,5 +72,11 @@ export class HomeComponent implements OnInit {
   public loadMoreProducts() {
     this.pageNumber++;
     this.getAllProducts();
+  }
+
+  public searchByKeyword(searchKey: string) {
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProducts(searchKey);
   }
 }

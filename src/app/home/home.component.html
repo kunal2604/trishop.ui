@@ -1,5 +1,19 @@
 <div class="container mt-5">
-    <button type="button" mat-raised-button color="primary" (click)="openContactUsForm()">CONTACT US</button>
+    <div class="text-center p-5">
+        <button type="button" mat-raised-button color="primary" (click)="openContactUsForm()">CONTACT US</button>
+    </div>
+    
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Search any product</mat-label>
+        <input matInput
+            #searchKeyword
+            (keyup)="searchByKeyword(searchKeyword.value)"
+            name="searchKey"
+            id="searchKey"
+            placeholder="Search products"
+        >        
+    </mat-form-field>
+
     <mat-grid-list cols="4" rowHeight="3:5" gutterSize="10">
         <mat-grid-tile *ngFor="let p of productDetails">
             <div class="row p-5">
