@@ -11,11 +11,12 @@ import { ImageProcessingService } from '../_services/image-processing.service';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../shared/components/dialog/confirmation-dialog/confirmation-dialog.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-show-product-details',
   standalone: true,
-  imports: [MatTableModule, MatIconModule, MatDialogModule, MatButtonModule],
+  imports: [MatTableModule, MatIconModule, MatDialogModule, MatButtonModule, NgIf],
   templateUrl: './show-product-details.component.html',
   styleUrl: './show-product-details.component.css'
 })
@@ -26,7 +27,10 @@ export class ShowProductDetailsComponent implements OnInit {
   private _dialogBox = inject(MatDialog);
   private _router = inject(Router);
 
+  showProductsTable: boolean = false;
+  showLoadMoreButton: boolean = false;
   pageNumber: number = 0;
+  pageSize: number = 4;
   productDetails : Product[] = [];
   displayedColumns: string[] = ['productName', 'description', 'price', 'discount', 'actions'];
 
@@ -35,14 +39,21 @@ export class ShowProductDetailsComponent implements OnInit {
   }
 
   public getAllProducts() {
-    return this._productService.getAllProducts(this.pageNumber, 5)
+    this.showProductsTable = false;
+    return this._productService.getAllProducts(this.pageNumber, this.pageSize)
     .pipe(
       map( (x: Product[], i) => x.map((product: Product) => this._imageProcessingService.createImagesFromProduct(product)) )
     )
     .subscribe(
       (response: Product[]) => {
-        // response.forEach(p => this.productDetails.push(p)); // why not working ??
-        this.productDetails = response;
+        response.forEach(p => this.productDetails.push(p)); // why not working ??
+        if(response.length == this.pageSize) {
+          this.showLoadMoreButton = true;
+        }
+        else {
+          this.showLoadMoreButton = false;
+        }
+        this.showProductsTable = true;
     }, (error : HttpErrorResponse) => {
       console.log(error);
     });
@@ -89,5 +100,11 @@ export class ShowProductDetailsComponent implements OnInit {
         callback();
       }
     })
+  }
+
+
+  public loadMoreProducts() {
+    this.pageNumber++;
+    this.getAllProducts();
   }
 }
