@@ -42,4 +42,9 @@ export class ProductService {
     const url = this.BASE_URL + Endpoints.PLACE_ORDER;
     return this.httpclient.post(url, orderDetails);
   }
+
+  public addToCart(productId: number) {
+    const url = this.BASE_URL + Endpoints.ADD_TO_CART.replace("{productId}", productId.toString());
+    return this.httpclient.get(url);
+  }
 }
