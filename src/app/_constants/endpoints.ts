@@ -9,4 +9,5 @@ export class Endpoints {
     public static DELETE_PRODUCT_DETAILS = "/deleteProductDetails/{productId}";
     public static GET_PRODUCT_DETAILS = "/getProductDetails/{isSingleProductCheckout}/{productId}";
     public static PLACE_ORDER = "/placeOrder";
+    public static ADD_TO_CART = "/addToCart/{productId}";
 }

@@ -4,6 +4,7 @@ import { Product } from '../_model/product.model';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ProductService } from '../_services/product.service';
 
 @Component({
   selector: 'app-product-view-detail',
@@ -24,6 +25,7 @@ export class ProductViewDetailComponent implements OnInit {
 
   private _activatedRoute = inject(ActivatedRoute);
   private _router = inject(Router);
+  private _productService = inject(ProductService);
   selectedProductImageIndex: number = 0;
 
   ngOnInit(): void {
@@ -40,5 +42,15 @@ export class ProductViewDetailComponent implements OnInit {
       isSingleProductCheckout: true,
       id: productId
     }]);
+  }
+
+  public addToCart(productId: number) {
+    this._productService.addToCart(productId).subscribe(
+      (resp) => {
+        console.log(resp);
+      }, (err) => {
+        console.log(err);
+      }
+    );
   }
 }
