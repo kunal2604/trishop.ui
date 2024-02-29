@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { OrderDetails } from '../../_model/order-details.model';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../_model/product.model';
 import { ProductService } from '../../_services/product.service';
 import { NgFor } from '@angular/common';
@@ -22,7 +22,8 @@ export class BuyProductComponent implements OnInit {
   private _activatedRoute = inject(ActivatedRoute);
   private _productService = inject(ProductService);
   private _dialogBox = inject(MatDialog);
-  
+  private _router = inject(Router);
+
   productDetails: Product[] = [];
   orderDetails: OrderDetails = {
     orderName: '',
@@ -31,9 +32,11 @@ export class BuyProductComponent implements OnInit {
     orderAlternateContact: '',
     orderProductQuantityList: []
   }
+  isSingleProductCheckout:string | null = '';
 
   ngOnInit(): void {
     this.productDetails = this._activatedRoute.snapshot.data['productDetails'];
+    this.isSingleProductCheckout = this._activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
     this.productDetails.forEach(
       x => this.orderDetails.orderProductQuantityList.push(
         { productId: x.productId, quantity: 1 }
@@ -44,7 +47,7 @@ export class BuyProductComponent implements OnInit {
   }
 
   public placeOrder(orderForm: NgForm) {
-    this._productService.placeOrder(this.orderDetails).subscribe(
+    this._productService.placeOrder(this.orderDetails, this.isSingleProductCheckout).subscribe(
       (resp) => {
         console.log(resp);
         this.openNotificationForm('Order Placed', `Your order: ${this.orderDetails.orderName} was successfully placed!`);
@@ -92,12 +95,15 @@ export class BuyProductComponent implements OnInit {
   }
 
   public openNotificationForm(title: string, message: string) {
-    this._dialogBox.open(NotificationDialogueComponent, {
+    var _notificationPopup = this._dialogBox.open(NotificationDialogueComponent, {
       data: {
         title: title,
         message: message
       },
       width: '30%'
+    });
+    _notificationPopup.afterClosed().subscribe((item) => {
+      this._router.navigate(['/']);
     });
   }
 }

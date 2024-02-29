@@ -8,7 +8,7 @@ export class Endpoints {
     public static GET_PRODUCT_DETAILS_BY_ID = "/getProductDetailsById/{productId}";
     public static DELETE_PRODUCT_DETAILS = "/deleteProductDetails/{productId}";
     public static GET_PRODUCT_DETAILS = "/getProductDetails/{isSingleProductCheckout}/{productId}";
-    public static PLACE_ORDER = "/placeOrder";
+    public static PLACE_ORDER = "/placeOrder/{isCartCheckout}";
     public static ADD_TO_CART = "/addToCart/{productId}";
     public static GET_CART_DETAILS = "/getCartDetails";
 }
