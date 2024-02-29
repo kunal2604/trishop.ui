@@ -38,8 +38,8 @@ export class ProductService {
     return this.httpclient.get<Product[]>(url);
   }
 
-  public placeOrder(orderDetails: OrderDetails) {
-    const url = this.BASE_URL + Endpoints.PLACE_ORDER;
+  public placeOrder(orderDetails: OrderDetails, isCartCheckout: string | null) {
+    const url = this.BASE_URL + Endpoints.PLACE_ORDER.replace("{isCartCheckout}", isCartCheckout != null ? isCartCheckout : "");
     return this.httpclient.post(url, orderDetails);
   }
 
