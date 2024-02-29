@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { CartService } from '../../_services/cart.service';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -13,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class CartComponent {
   private _cartService = inject(CartService);
+  private _router = inject(Router);
   cartDetails: any[] = [];
   displayedColumns: string[] = ['productName', 'description', 'price', 'discount', 'actions'];
 
@@ -32,5 +34,12 @@ export class CartComponent {
   }
   public deleteProduct(productId: number) {
     console.log('Delete product from cart');  
+  }
+
+  public checkout() {
+    this._router.navigate(['/buyProduct', {
+      isSingleProductCheckout: false,
+      id: 0
+    }]);
   }
 }
