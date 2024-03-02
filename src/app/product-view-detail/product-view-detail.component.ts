@@ -5,6 +5,8 @@ import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ProductService } from '../_services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationDialogueComponent } from '../shared/components/dialog/notification-dialogue/notification-dialogue.component';
 
 @Component({
   selector: 'app-product-view-detail',
@@ -26,6 +28,7 @@ export class ProductViewDetailComponent implements OnInit {
   private _activatedRoute = inject(ActivatedRoute);
   private _router = inject(Router);
   private _productService = inject(ProductService);
+  private _dialogBox = inject(MatDialog);
   selectedProductImageIndex: number = 0;
 
   ngOnInit(): void {
@@ -47,10 +50,23 @@ export class ProductViewDetailComponent implements OnInit {
   public addToCart(productId: number) {
     this._productService.addToCart(productId).subscribe(
       (resp) => {
+        if(resp == null) {
+          this.openNotificationForm('Error','Item already present in cart');
+        }
         console.log(resp);
       }, (err) => {
         console.log(err);
       }
     );
+  }
+
+  public openNotificationForm(title: string, message: string) {
+    var _notificationPopup = this._dialogBox.open(NotificationDialogueComponent, {
+      data: {
+        title: title,
+        message: message
+      },
+      width: '30%'
+    });
   }
 }
