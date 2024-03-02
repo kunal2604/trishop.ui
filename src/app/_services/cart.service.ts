@@ -14,4 +14,9 @@ export class CartService {
     const url = this.BASE_URL + Endpoints.GET_CART_DETAILS;
     return this.httpclient.get<any[]>(url);
   }
+
+  public deleteProductFromCart(cartId: number) {
+    const url = this.BASE_URL + Endpoints.DELETE_PRODCT_FROM_CART.replace("{cartId}", cartId.toString());
+    return this.httpclient.delete(url);
+  }
 }
