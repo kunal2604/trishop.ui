@@ -11,4 +11,5 @@ export class Endpoints {
     public static PLACE_ORDER = "/placeOrder/{isCartCheckout}";
     public static ADD_TO_CART = "/addToCart/{productId}";
     public static GET_CART_DETAILS = "/getCartDetails";
+    public static DELETE_PRODCT_FROM_CART = "/deleteCartItem/{cartId}";
 }
